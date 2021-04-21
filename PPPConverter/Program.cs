@@ -9,33 +9,77 @@ namespace PPPConverter
     static class Program
     {
 
-        // Attempts to take in data about the quality and price of an item, and converts them to be equivelant to USD
-        // Computer runs twice as fast, costs four times as much (?) 
-        // Probably needs fairly specific choices and assumptions, may want to expose to user
-        // Attempts to fix issue with literally all the money in the world won't make a reasonable equivelancy.  
-        static double calculate_quality_equivelance(double[] USD_cost, double[] comp_cost)
+        // Something might be weird
+
+        static double Alert_User()
         {
 
             return 0;
+        }
+
+        // Attempts to take in data about the quality and price of an item, and converts them to be equivelant to USD
+        // Computer runs twice as fast, costs four times as much (?) - tries to equalize across time as 400% more
+        // Probably needs fairly specific choices and assumptions, may want to expose to user
+        // Attempts to fix issue with literally all the money in the world won't make a reasonable equivelancy.  
+        static double[] Calculate_Quality_Equivelance(double[] USD_cost, double[] comp_cost, double[] comp_quality, double lower_limit = .5, double upper_limit = 1.5)
+        {
+
+            double[] comp_val = [];
+
+            for (int i = 0; i < comp_cost.Length; i++)
+            {
+
+                comp_val[i] = comp_cost[i] * comp_quality[i];
+
+                if (USD_cost[i] / comp_val[i] < lower_limit || USD_cost[i] / comp_val[i] > upper_limit)
+                {
+                    Alert_User();
+                }
+
+            }
+
+            return comp_val;
         }
 
         // Attempts to complete the percentage allocation calculation
-        // Given yearly income, and relative time period/wealth, attempts to break out how the individual will likely spend their money
-        static double calculate_percentage_wealth_allocation(double[] USD_cost, double[] comp_cost)
+        // Given yearly income, and relative time period/wealth, attempts to break out how the individual will likely spend their money, for the average (median?) person
+        //Arbitrary basis makes it either percentage (if 1) or off a wealth pool (so like 500 gp or something)
+        static double[] Calculate_Percentage_Wealth_Allocation(double[] period, double[] nudge, double[] socioecon_class, double arbitrary_basis = 0)
         {
+            double[] wealth_allocation_avg = [];
 
-            return 0;
+            for (int i = 0; i < period.Length; i++)
+            {
+
+                wealth_allocation_avg[i] = arbitrary_basis * period[i] * nudge[i] * socioecon_class[i];
+
+            }
+            return wealth_allocation_avg;
         }
 
         // Attempts to extrapolate the yearly wage of an average worker
-        static double calculate_average_yearly_wage(double[] USD_cost, double[] comp_cost)
+        //Arbitrary basis makes it either percentage (if 1) or off a wealth pool (so like 500 gp or something)
+        static double Calculate_Average_Yearly_Wage((double[] Calculate_Percentage_Wealth_Allocation, double[,] prices, double arbitrary_basis = 0, int year_length)
         {
+            double yearly_wage = 0;
 
-            return 0;
+            for (int i = 0; i < prices.Length; i++)
+            {
+                double temp_price = 0;
+                for (int j = 0; j < prices[i].Length; j++)
+                {
+                    temp_price = temp_price + prices[i, j];
+                }
+
+                //May need to correct, idea is that yearly wage is the amount in prices times the allocation times the year, so the general amount one would likely spend in a day multiplied by the year
+                //would need to normalize prices to be the amount purchased in a day.  Price of 1 lb beef would be calculated the same as an egg, even if you probably eat more than one egg a day.  
+                yearly_wage = yearly_wage + Calculate_Percentage_Wealth_Allocation[i] * temp_price * year_length;
+            }
+            return yearly_wage;
         }
         // Attempts to complete the PPP calculation, last item
         //All items should be normalized, so should just be adding up each side and returning the result
-        static double calculate_final_PPP(double[] USD_cost, double[] comp_cost)
+        static double Calculate_Final_PPP(double[] USD_cost, double[] comp_cost)
         {
             double USD_val = 0;
             double comp_val = 0;
