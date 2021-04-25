@@ -102,7 +102,7 @@ namespace PPPConverter
                     //Find PPP
                     //Find potential implications
                 //Scale (individual, town, society)
-                    //Period (Stone age, Iron age, Roman, Medieval, Industrial Age, Space Age, Information Age, Future)
+                    //Period (Stone age, Iron age, Roman, Medieval, Industrial Age, Space Age, Information Age, Future) - Make automatic adjustment for whatever is input?
                     //Relative wealth (for individual and town) (Starving, Impoverished, Stunted, Comfortable, Wealthy, set Gini coefficient(?))
                     //Global modifiers (General danger level, (more spending on weapons) finetune adjustment of wealth allocation)
                     //Wealth (Absolute or relative - gives user automatically updating remaining amount, relative helps with deciding prices based on rest of input)

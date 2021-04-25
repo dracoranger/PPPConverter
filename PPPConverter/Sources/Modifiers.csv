@@ -1,0 +1,25 @@
+**Scale - Determines allocations of resources across (Food, Energy, Housing, Clothing, Consumer Goods, Absolute necessities (oxygen/water), Services, Savings/Investment)
+Individual	[.1296,.0650,.3215,.0299,.2070,.0102,.1177,.1191] https://www.bls.gov/cex/tables.htm#multiyear 
+Town	[.1,.15,.3,.01,.18,.05,.2,.01]
+Society	[0,0,0,0,0,0,0,0]	https://www.bea.gov/data/gdp/gdp-industry
+
+**Period - Sets relative emphasis, guesstimated
+Stone Age	[1.75,0.25,0.25,1.75,0.00,2.00,0.00,0.00]
+Iron Age	[1.50,0.35,0.35,1.25,0.25,2.00,0.25,0.25]
+Roman	[1.25,0.65,0.65,1.10,0.50,1.50,0.50,0.75]
+Medieval	[1.35,0.50,0.50,1.15,0.45,2.00,0.35,0.25]
+Industrial Age	[1.20,0.75,0.75,1.20,1.05,1.50,0.75,0.50]
+Space Age	[1.10,1.10,0.85,1.10,1.00,1.10,0.90,.85]
+Information Age	[1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00]
+Future	[0.75,1.25,0.75,0.75,0.75,0.75,1.25,1.25]
+
+**Relative Wealth- Implements gini coefficient?
+Starving	[0.65,0.05,0.10,0.10,0.05,0.10,0,0]
+Impoverished	[0,0,0,0,0,0,0,0]
+Stunted	[0,0,0,0,0,0,0,0]
+Comfortable	[0.25,0,0,0,0,0,0,0]
+Wealthy	
+Superwealthy
+set Gini coefficient
+
+**Global Modifiers
