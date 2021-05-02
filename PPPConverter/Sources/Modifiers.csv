@@ -4,7 +4,7 @@ Town	[.1,.15,.3,.01,.18,.05,.2,.01]	Guesstimated
 Society	[0,0,0,0,0,0,0,0]	https://www.bea.gov/data/gdp/gdp-industry
 
 **Period - Sets relative emphasis, guesstimated
-Stone Age	[1.75,0.25,0.25,1.75,0.00,2.00,0.00,0.00]
+Stone Age	[1.75,0.25,0.25,1.75,0.00,2.00,0.01,0.01]
 Iron Age	[1.50,0.35,0.35,1.25,0.25,2.00,0.25,0.25]
 Roman	[1.25,0.65,0.65,1.10,0.50,1.50,0.50,0.75]
 Medieval	[1.35,0.50,0.50,1.15,0.45,2.00,0.35,0.25]
@@ -13,13 +13,24 @@ Space Age	[1.10,1.10,0.85,1.10,1.00,1.10,0.90,.85]
 Information Age	[1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00]
 Future	[0.75,1.25,0.75,0.75,0.75,0.75,1.25,1.25]
 
-**Relative Wealth- Implements gini coefficient?
+**Relative Wealth - guesstimated with plot points between starving and wealthy, should probably round to 2 digits, way too sure here
 Starving	[0.65,0.05,0.10,0.10,0.05,0.10,0,0]
-Impoverished	[0,0,0,0,0,0,0,0]
-Stunted	[0,0,0,0,0,0,0,0]
-Comfortable	[0.25,0,0,0,0,0,0,0]
-Wealthy	
-Superwealthy
-set Gini coefficient
+Impoverished	[0.5199,0.05375,0.155375,0.082475,0.08925,0.07755,0.030175,0.030525]
+Stunted	[0.3898,0.0575,0.21075,0.06495,0.1285,0.0551,0.05935,0.06005]
+Comfortable	[0.2597,0.06125,0.266125,0.047425,0.16775,0.03265,0.088525,0.089575]
+Wealthy	[0.1296,0.065,0.3215,0.0299,0.207,0.0102,0.1177,0.1191]
+Superwealthy [0.13,0.06875,0.3,0.012375,0.20625,0.01,0.126875,0.148625]
+
+**Historical Gini - https://ourworldindata.org/income-inequality very rough and generalized, probably bad history on its own, major issues within and without a nation
+
+
+Stone Age	35
+Iron Age	40
+Roman	37
+Medieval	30-65
+Industrial Age	40
+Space Age	35
+Information Age	45
 
 **Global Modifiers
+

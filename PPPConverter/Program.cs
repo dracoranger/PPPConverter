@@ -9,8 +9,83 @@ namespace PPPConverter
     static class Program
     {
 
-        // Something might be weird
+        //Gini Calculation 
+        //gini cannot be ~1~ .99346... Why?
+        //Closer to negative infinity approaches 45 degrees
+        //Returns an approximate pattern of that society
+        static double[] Gini_Calculation(int people = 100, double gini, double total_wealth)
+        {
+            double gini_test = gini;
+            double gini_outcome = -1;
+            double wealth_sum = 0;
+            double eiyi = 0;
+            double[] wealth_per_person = new double[people];
+            double[] workers = new double[people];
 
+            double adjustment = .001;
+
+            if (gini < .15)
+            {
+                adjustment = 1;
+            }
+            else if (gini < .25)
+            {
+                adjustment = .1;
+            }
+            else if (gini < .33)
+            {
+                adjustment = .01;
+            }
+
+
+            while (Math.Abs(gini_outcome - gini) < .005)
+            {
+
+                wealth_sum = 0;
+                eiyi = 0;
+                //create array of individuals, length of people 
+                workers = new double[people]; //Slightly inefficient?  has one extra check, probably doesn't matter.  Performance issues will be from the repeated attempts, should look at the 
+
+                //Summations
+                for (int i = 0; i < people; i++)
+                {
+                    workers[i] = Math.Pow(Convert.ToDouble(i), (1 / (1 - gini_test)));//Probably should look at this again.  Good approximation at mid and high ranges, less so below .33, 
+                    wealth_sum += workers[i];
+                    eiyi += i * workers[i];
+                }
+
+
+                double upperSum = 2 * eiyi;
+                double lowerSum = people * wealth_sum;
+                gini_outcome = (upperSum / lowerSum) - ((people + 1) / people);
+
+
+
+                if (Math.Abs(gini_outcome - gini) > .005)
+                {
+                    if (gini_outcome > gini)//Adjust based on how far away?  Need to do that below .33, definitely
+                    {
+                        gini_test = gini_test + adjustment;
+                    }
+                    else
+                    {
+                        gini_test = gini_test - adjustment;
+                    }
+                }
+            }
+
+            //Total wealth converts the arbitrary numbers into something a bit more controlled.  
+            for (int i = 0; i < people; i++)
+            {
+                wealth_per_person[i] = (workers[i] / wealth_sum) * total_wealth;
+            }
+
+            return wealth_per_person;
+
+        }
+
+        // Something might be weird
+        //Tell user and prompt them to fix it
         static double Alert_User()
         {
 
@@ -138,6 +213,12 @@ namespace PPPConverter
 
 
             //Return to user
+
+                //PPP
+                //Likely prices
+                //Gini graph
+                    //breakdown of percentages of people in each segment?
+                    //So absolute poverty line?
 
             //Prompt for saving for later work
 
