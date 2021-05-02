@@ -1,6 +1,6 @@
 **Scale - Determines allocations of resources across (Food, Energy, Housing, Clothing, Consumer Goods, Absolute necessities (oxygen/water), Services, Savings/Investment)
-Individual	[.1296,.0650,.3215,.0299,.2070,.0102,.1177,.1191] https://www.bls.gov/cex/tables.htm#multiyear 
-Town	[.1,.15,.3,.01,.18,.05,.2,.01]
+Individual	[.1296,.0650,.3215,.0299,.2070,.0102,.1177,.1191]	https://www.bls.gov/cex/tables.htm#multiyear 
+Town	[.1,.15,.3,.01,.18,.05,.2,.01]	Guesstimated
 Society	[0,0,0,0,0,0,0,0]	https://www.bea.gov/data/gdp/gdp-industry
 
 **Period - Sets relative emphasis, guesstimated
