@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Text;
 
 namespace PPPConverter
 {
@@ -99,7 +101,7 @@ namespace PPPConverter
         static double[] Calculate_Quality_Equivelance(double[] USD_cost, double[] comp_cost, double[] comp_quality, double lower_limit = .5, double upper_limit = 1.5)
         {
 
-            double[] comp_val = [];
+            double[] comp_val = new double[comp_cost.Length];
 
             for (int i = 0; i < comp_cost.Length; i++)
             {
@@ -121,7 +123,7 @@ namespace PPPConverter
         //Arbitrary basis makes it either percentage (if 1) or off a wealth pool (so like 500 gp or something)
         static double[] Calculate_Percentage_Wealth_Allocation(double[] period, double[] nudge, double[] socioecon_class, double arbitrary_basis = 0)
         {
-            double[] wealth_allocation_avg = [];
+            double[] wealth_allocation_avg = new double[period.Length];
 
             for (int i = 0; i < period.Length; i++)
             {
@@ -172,28 +174,114 @@ namespace PPPConverter
         {
             //Load last input
 
-            //Take in inputs
-                //Intent
-                    //Find PPP
-                    //Find potential implications
-                //Scale (individual, town, society)
-                    //Period (Stone age, Iron age, Roman, Medieval, Industrial Age, Space Age, Information Age, Future) - Make automatic adjustment for whatever is input?
-                    //Relative wealth (for individual and town) (Starving, Impoverished, Stunted, Comfortable, Wealthy, set Gini coefficient(?))
-                    //Global modifiers (General danger level, (more spending on weapons) finetune adjustment of wealth allocation)
-                    //Wealth (Absolute or relative - gives user automatically updating remaining amount, relative helps with deciding prices based on rest of input)
-                //Resources - Each one is quantity, price, quality (% compared to US) (Utility function compared to US?  10x as much food doesn't produce 10x as much wealth?)
-                    //Food
-                    //Energy
-                    //Weapons
-                    //Clothes
-                    //Consumer goods
-                    //Housing
-                    //Water
-                    //Services
-                    //Savings/Investment
-                //
+            string save = "";
 
-            //Temp save
+            string path = Path.GetFileName("save.txt");
+            using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                byte[] b = new byte[1024];
+                UTF8Encoding temp = new UTF8Encoding(true);
+
+                while (fs.Read(b, 0, b.Length) > 0)
+                {
+                    save += temp.GetString(b);
+                }
+            }
+
+
+            //Take in inputs
+            //Intent
+            //Find PPP
+            //Find potential implications
+
+            //Break loading in data into different segment?
+
+            string modifiers = "";
+
+            path = Path.GetFileName("modifiers.csv");
+            using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                byte[] b = new byte[1024];
+                UTF8Encoding temp = new UTF8Encoding(true);
+
+                while (fs.Read(b, 0, b.Length) > 0)
+                {
+                    modifiers += temp.GetString(b);
+                }
+            }
+
+            string[] broken_modifiers = modifiers.Split("\n");
+
+            double[,] scale = new double[8,3];
+            double[,] period = new double[8,8];
+            double[,] relative_wealth = new double[8,6];
+            double[,] historical_gini = new double[8, 7];
+            double[,] global_modifiers = new double[8, 7];
+
+            string[] temp_broken = new string[8];
+
+            int stage = -1;
+            int set = 0;
+
+            for (int i = 0; i<broken_modifiers.Length; i++)
+            {
+                if (broken_modifiers[i].Substring(0, 2) == "**")
+                {
+                    stage += 1;
+                    set = 0;
+                }
+                else
+                {
+                    temp_broken = broken_modifiers[i].Split("\t"); 
+                    //Chop out the [s and ]s?
+                }
+
+                switch (stage)
+                {
+                    case 0: //Scale (individual, town, society)
+                        string[] nums = temp_broken[stage].Split(",");
+                        for(int j = 0; j < scale[set,].Length; j++)
+                        {
+                            scale[set, j] = Convert.ToDouble(nums[j]);
+                        }
+                        set += 1;
+                    case 1: //Period (Stone age, Iron age, Roman, Medieval, Industrial Age, Space Age, Information Age, Future) - Make automatic adjustment for whatever is input?
+                        string[] nums = temp_broken[stage].Split(",");
+                        for (int j = 0; j < period[set,].Length; j++)
+                        {
+                            period[set, j] = Convert.ToDouble(nums[j]);
+                        }
+                        set += 1;
+                    case 2: //Relative wealth (for individual and town) (Starving, Impoverished, Stunted, Comfortable, Wealthy, set Gini coefficient(?))
+                        string[] nums = temp_broken[stage].Split(",");
+                        for (int j = 0; j < relative_wealth[set,].Length; j++)
+                        {
+                            relative_wealth[set, j] = Convert.ToDouble(nums[j]);
+                        }
+                        set += 1;
+                    case 3: //Wealth (Absolute or relative - gives user automatically updating remaining amount, relative helps with deciding prices based on rest of input)
+                        string[] nums = temp_broken[stage].Split(",");
+                        for (int j = 0; j < historical_gini[set,].Length; j++)
+                        {
+                            historical_gini[set, j] = Convert.ToDouble(nums[j]);
+                        }
+                        set += 1;
+                    case 4: //Global modifiers (General danger level, (more spending on weapons) finetune adjustment of wealth allocation)
+                        string[] nums = temp_broken[stage].Split(",");
+                        for (int j = 0; j < global_modifiers[set,].Length; j++)
+                        {
+                            global_modifiers[set, j] = Convert.ToDouble(nums[j]);
+                        }
+                        set += 1;
+                }
+            }
+
+
+            //Resources - Each one is quantity, price, quality (% compared to US) (Utility function compared to US?  10x as much food doesn't produce 10x as much wealth?), read off Consumer_Purchase_allocation
+
+            //Push data to the GUI
+
+            //Temp save when user selects output
 
             //Establish path
 
@@ -201,28 +289,23 @@ namespace PPPConverter
 
                     //Quality conversion
 
-                //Likely time period/situation
+                    //Likely time period/situation
 
                     //Rest of society
 
-
-            //Page database
-            
             //Normalize and convert
-
-
 
             //Return to user
 
                 //PPP
                 //Likely prices
                 //Gini graph
-                    //breakdown of percentages of people in each segment?
-                    //So absolute poverty line?
+                //breakdown of percentages of people in each segment?
+                //So absolute poverty line?
 
             //Prompt for saving for later work
 
-                //Overwrite temp save
+            //Overwrite temp save
 
             return [0];
         }
