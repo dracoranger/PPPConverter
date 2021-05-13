@@ -194,7 +194,7 @@ namespace PPPConverter
             //Find PPP
             //Find potential implications
 
-            //Break loading in data into different segment?
+            //Break loading in data into different segment?  Unlikely to be an issue, it's a fucking text file you pretentous knob
 
             string modifiers = "";
 
